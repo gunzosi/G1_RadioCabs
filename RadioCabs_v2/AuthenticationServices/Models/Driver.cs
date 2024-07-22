@@ -13,9 +13,11 @@ public class Driver
     public string DriverMobile { get; set; }
     public string? DriverEmail { get; set; }
     public string Password { get; set; }
+    public bool? Status { get; set; }
+    public string? Role { get; set; }
     
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
     
-    public DriverInfo? DriverInfo { get; set; }
+    public virtual DriverInfo? DriverInfo { get; set; }
 }

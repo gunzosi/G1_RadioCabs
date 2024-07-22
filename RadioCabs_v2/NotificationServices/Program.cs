@@ -25,15 +25,15 @@ builder.Services.AddTransient<EmailServices>();
 
 
 // REDIS 
-builder.Services.AddSingleton<RedisClient.RedisClient>(
+builder.Services.AddSingleton<RedisClient.REDISCLIENT>(
     provider => new RedisClient
-        .RedisClient(builder.Configuration.GetValue<string>("Redis:ConnectionStrings")!)
+        .REDISCLIENT(builder.Configuration.GetValue<string>("Redis:ConnectionStrings")!)
 );
 
 
 var app = builder.Build();
 
-var redisClient = app.Services.GetRequiredService<RedisClient.RedisClient>();
+var redisClient = app.Services.GetRequiredService<RedisClient.REDISCLIENT>();
 redisClient.Subscribe("user_register", async (channel, message) =>
 {
     var parts = message.ToString().Split('|');
@@ -42,10 +42,26 @@ redisClient.Subscribe("user_register", async (channel, message) =>
     {
         ToMail = parts[1],
         Subject = "Welcome to RadioCabs",
-        HtmlContent = $"Hello {parts[0]}, <br> Welcome to RadioCabs. <br> Your account has been created successfully."
+        HtmlContent = $"Hello {parts[0]}, " +
+                      $"<br> Welcome to RadioCabs. <br> Your account has been created successfully."
     });
 });
 
+
+// REDIS MOBLIE
+redisClient.Subscribe("driver_register", async (channel, message) =>
+{
+    var parts = message.ToString().Split('|');
+    var emailService = app.Services.GetRequiredService<EmailServices>();
+    await emailService.SendEmailAsync(new EmailRequest
+    {
+        ToMail = parts[1],
+        Subject = "Welcome to RadioCabs",
+        HtmlContent = $"Hello {parts[0]}, " +
+                      $"<br> Welcome to RadioCabs. <br> Your account has been created successfully."+
+                      $"Your Driver Code is: {parts[2]}"
+    });
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

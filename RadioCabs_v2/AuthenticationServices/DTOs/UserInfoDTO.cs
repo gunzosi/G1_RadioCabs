@@ -1,0 +1,14 @@
+﻿namespace AuthenticationServices.DTOs;
+
+public class UserInfoDTO
+{
+    public string FullName { get; set; }
+    public string Mobile { get; set; }
+    public string Address { get; set; }
+    public string? Ward { get; set; }
+    public string? District { get; set; }
+    public string? City { get; set; }
+    public string? Location { get; set; }
+    public string? PersonalImage { get; set; }
+    public string? Role { get; set; }
+}

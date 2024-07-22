@@ -9,6 +9,12 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// CORS - Cross Origin Resource Sharing
+app.UseCors(corsPolicyBuilder => corsPolicyBuilder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
