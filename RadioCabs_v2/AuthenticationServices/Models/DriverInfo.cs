@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AuthenticationServices.Models;
 
@@ -15,5 +16,6 @@ public class DriverInfo
     public string? City { get; set; }
     public string? DriverPersonalImage { get; set; }
     public string? DriverLicenseImage { get; set; }
+    [JsonIgnore]
     public virtual Driver? Driver { get; set; }
 }

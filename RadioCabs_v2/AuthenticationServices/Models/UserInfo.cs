@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AuthenticationServices.Models;
 
@@ -16,5 +17,6 @@ public class UserInfo
     public string? City { get; set; }
     public string? Location { get; set; }
     public string? Image { get; set; }
+    [JsonIgnore]
     public virtual User? User  { get; set; }
 }
