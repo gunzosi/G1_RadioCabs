@@ -5,7 +5,6 @@ using AuthenticationServices.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Common;
 using RedisClient;
 
 namespace AuthenticationServices.Controllers
@@ -30,8 +29,7 @@ namespace AuthenticationServices.Controllers
         {
             try
             {
-                var existingDriver =
-                    await _dbContext.Drivers.FirstOrDefaultAsync(d => d.DriverMobile == driverDto.DriverMobile);
+                var existingDriver = await _dbContext.Drivers.FirstOrDefaultAsync(d => d.DriverMobile == CheckingPattern.AddPrefixMobile(driverDto.DriverMobile));
                 if (existingDriver != null)
                 {
                     return BadRequest(new
@@ -48,6 +46,7 @@ namespace AuthenticationServices.Controllers
                     DriverCode = driverCodeRandom,
                     DriverMobile = CheckingPattern.AddPrefixMobile(driverDto.DriverMobile),
                     Password = PasswordHelper.HashPassword(driverDto.Password),
+                    Role = "Driver"
                 };
 
                 await _dbContext.Drivers.AddAsync(driver);
@@ -64,8 +63,8 @@ namespace AuthenticationServices.Controllers
                     Driver = driver,
                     Token = token
                 });
-
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
@@ -81,11 +80,8 @@ namespace AuthenticationServices.Controllers
         {
             try
             {
-                var existingDriver = await _dbContext
-                    .Drivers
-                        .FirstOrDefaultAsync(d => d.DriverMobile == CheckingPattern.RemovePrefixMobile(loginDto.Identifier));
-                if (existingDriver == null ||
-                    !PasswordHelper.VerifyPassword(loginDto.Password, existingDriver.Password))
+                var existingDriver = await _dbContext.Drivers.FirstOrDefaultAsync(d => d.DriverMobile == CheckingPattern.RemovePrefixMobile(loginDto.Identifier));
+                if (existingDriver == null || !PasswordHelper.VerifyPassword(loginDto.Password, existingDriver.Password))
                 {
                     return BadRequest(new
                     {
@@ -93,7 +89,7 @@ namespace AuthenticationServices.Controllers
                         Message = "Driver not found or password is incorrect."
                     });
                 }
-                
+
                 var token = JwtHelper.GenerateToken(existingDriver.DriverMobile, _configuration["Jwt:Key"]!, "Driver");
                 existingDriver.RefreshToken = Guid.NewGuid().ToString();
                 existingDriver.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(60);
@@ -118,12 +114,10 @@ namespace AuthenticationServices.Controllers
             }
         }
         
-        
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken(TokenRefresh refreshTokenDto)
         {
-            var driver =
-                await _dbContext.Drivers.FirstOrDefaultAsync(u => u.RefreshToken == refreshTokenDto.RefreshToken);
+            var driver = await _dbContext.Drivers.FirstOrDefaultAsync(u => u.RefreshToken == refreshTokenDto.RefreshToken);
             if (driver == null || driver.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
                 return Unauthorized(new
@@ -145,6 +139,5 @@ namespace AuthenticationServices.Controllers
                 RefreshToken = driver.RefreshToken
             });
         }
-        
     }
 }

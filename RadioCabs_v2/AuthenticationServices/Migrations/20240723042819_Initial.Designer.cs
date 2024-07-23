@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthenticationServices.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240722174008_Initial")]
+    [Migration("20240723042819_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -57,6 +57,9 @@ namespace AuthenticationServices.Migrations
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
@@ -76,9 +79,6 @@ namespace AuthenticationServices.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DriverEmail")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("DriverLicense")
                         .HasColumnType("nvarchar(max)");
 
@@ -89,6 +89,9 @@ namespace AuthenticationServices.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ward")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DriverId");

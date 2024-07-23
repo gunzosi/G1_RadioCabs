@@ -23,6 +23,7 @@ namespace AuthenticationServices.Migrations
                     DriverEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -55,10 +56,10 @@ namespace AuthenticationServices.Migrations
                 columns: table => new
                 {
                     DriverId = table.Column<int>(type: "int", nullable: false),
-                    DriverEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DriverLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DriverPersonalImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DriverLicenseImage = table.Column<string>(type: "nvarchar(max)", nullable: true)

@@ -54,6 +54,9 @@ namespace AuthenticationServices.Migrations
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
@@ -73,9 +76,6 @@ namespace AuthenticationServices.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DriverEmail")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("DriverLicense")
                         .HasColumnType("nvarchar(max)");
 
@@ -86,6 +86,9 @@ namespace AuthenticationServices.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ward")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DriverId");

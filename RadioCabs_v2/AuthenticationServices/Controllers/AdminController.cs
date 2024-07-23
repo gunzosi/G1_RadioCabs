@@ -1,4 +1,3 @@
-using System.Data.Common;
 using AuthenticationServices.Database;
 using AuthenticationServices.DTOs;
 using AuthenticationServices.Helper;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RedisClient;
-using StackExchange.Redis;
 
 namespace AuthenticationServices.Controllers
 {
@@ -15,11 +13,9 @@ namespace AuthenticationServices.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        
         private readonly ApplicationDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly REDISCLIENT _redisclient;
-        // private readonly IBlobServices _blobServices;
         
         public AdminController(ApplicationDbContext dbContext, IConfiguration configuration, REDISCLIENT client)
         {
@@ -27,7 +23,7 @@ namespace AuthenticationServices.Controllers
             _configuration = configuration;
             _redisclient = client;
         }
-        
+
         // CRUD Driver
         [HttpGet("getAllDrivers")]
         public async Task<IActionResult> GetAllDrivers()
@@ -40,7 +36,8 @@ namespace AuthenticationServices.Controllers
                     Status = 200,
                     Data = drivers
                 });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
@@ -55,7 +52,7 @@ namespace AuthenticationServices.Controllers
         {
             try
             {
-                var driver = await _dbContext.Drivers.FindAsync(id);
+                var driver = await _dbContext.Drivers.Include(d => d.DriverInfo).FirstOrDefaultAsync(d => d.Id == id);
                 if (driver == null)
                 {
                     return NotFound(new
@@ -69,7 +66,8 @@ namespace AuthenticationServices.Controllers
                     Status = 200,
                     Data = driver
                 });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
@@ -80,66 +78,68 @@ namespace AuthenticationServices.Controllers
         }
         
         [HttpPut("updateDriver/{id}")]
-        public async Task<IActionResult> UpdateDriver(int id,[FromForm] DriverInfoDto driverDto)
+        public async Task<IActionResult> UpdateDriver(int id, [FromForm] DriverInfoDto driverInfoDto)
         {
-            
-                var driver = await _dbContext
-                                        .Drivers
-                                        .Include(d => d.DriverInfo)
-                                        .FirstOrDefaultAsync(d => d.Id == id);
-                if (driver == null)
+            var driver = await _dbContext
+                .Drivers
+                .Include(d => d.DriverInfo)
+                .FirstOrDefaultAsync(d => d.Id == id);
+            if (driver == null)
+            {
+                return NotFound(new
                 {
-                    return NotFound(new
-                    {
-                        Status = 404,
-                        Message = "Driver not found"
-                    });
-                }
-                if (!string.IsNullOrEmpty(driverDto.DriverFullName))
-                {
-                    driver.DriverFullName = driverDto.DriverFullName;
-                }
-                if (!string.IsNullOrEmpty(driverDto.DriverEmail))
-                {
-                    driver.DriverEmail = driverDto.DriverEmail;
-                }
-                if (!string.IsNullOrEmpty(driverDto.DriverLicense))
-                {
-                    driver.DriverInfo.DriverLicense = driverDto.DriverLicense;
-                }
-                if (!string.IsNullOrEmpty(driverDto.DriverLicense))
-                {
-                    driver.DriverInfo.DriverLicense = driverDto.DriverLicense;
-                }
-                if (!string.IsNullOrEmpty(driverDto.Address))
-                {
-                    driver.DriverInfo.Address = driverDto.Address;
-                }
-                if (!string.IsNullOrEmpty(driverDto.Street))
-                {
-                    driver.DriverInfo.Address = driverDto.Street;
-                }
-                if (!string.IsNullOrEmpty(driverDto.Ward))
-                {
-                    driver.DriverInfo.Ward = driverDto.Ward;
-                }
-                if (!string.IsNullOrEmpty(driverDto.City))
-                {
-                    driver.DriverInfo.City = driverDto.City;
-                }
-                
-                // if (driverDto.DriverPersonalImage != null)
-                // {
-                //     var contentType = BlobContentTypes.GetContentType(driverDto.DriverPersonalImage);
-                //     driver.DriverInfo.DriverPersonalImage = await _blobServices.UploadBlobWithContentTypeAsync(driverDto.DriverPersonalImage, contentType);
-                // }
+                    Status = 404,
+                    Message = "Driver not found"
+                });
+            }
 
-                // if (driverDto.DriverLicenseImage != null)
-                // {
-                //     var contentType = BlobContentTypes.GetContentType(driverDto.DriverLicenseImage);
-                //     driver.DriverInfo.DriverLicenseImage = await _blobServices.UploadBlobWithContentTypeAsync(driverDto.DriverLicenseImage, contentType);
-                // }
-                
+            if (!string.IsNullOrEmpty(driverInfoDto.DriverFullName))
+            {
+                driver.DriverFullName = driverInfoDto.DriverFullName;
+            }
+
+            if (!string.IsNullOrEmpty(driverInfoDto.DriverEmail))
+            {
+                driver.DriverEmail = driverInfoDto.DriverEmail;
+            }
+
+            if (!string.IsNullOrEmpty(driverInfoDto.DriverLicense))
+            {
+                driver.DriverInfo.DriverLicense = driverInfoDto.DriverLicense;
+            }
+
+            if (!string.IsNullOrEmpty(driverInfoDto.Address))
+            {
+                driver.DriverInfo.Address = driverInfoDto.Address;
+            }
+
+            if (!string.IsNullOrEmpty(driverInfoDto.Street))
+            {
+                driver.DriverInfo.Street = driverInfoDto.Street;
+            }
+
+            if (!string.IsNullOrEmpty(driverInfoDto.Ward))
+            {
+                driver.DriverInfo.Ward = driverInfoDto.Ward;
+            }
+
+            if (!string.IsNullOrEmpty(driverInfoDto.City))
+            {
+                driver.DriverInfo.City = driverInfoDto.City;
+            }
+
+            // if (driverInfoDto.DriverPersonalImage != null)
+            // {
+            //     var contentType = BlobContentTypes.GetContentType(driverInfoDto.DriverPersonalImage);
+            //     driver.DriverInfo.DriverPersonalImage = await _blobServices.UploadBlobWithContentTypeAsync(driverInfoDto.DriverPersonalImage, contentType);
+            // }
+
+            // if (driverInfoDto.DriverLicenseImage != null)
+            // {
+            //     var contentType = BlobContentTypes.GetContentType(driverInfoDto.DriverLicenseImage);
+            //     driver.DriverInfo.DriverLicenseImage = await _blobServices.UploadBlobWithContentTypeAsync(driverInfoDto.DriverLicenseImage, contentType);
+            // }
+            
             try
             {
                 await _dbContext.SaveChangesAsync();
@@ -148,10 +148,10 @@ namespace AuthenticationServices.Controllers
                     Status = 200,
                     Message = "Driver updated successfully"
                 });
-                    
-            } catch (DbUpdateConcurrencyException e)
+            }
+            catch (DbUpdateConcurrencyException e)
             {
-                if (!_dbContext.Drivers.Any(e => e.Id == id))
+                if (!_dbContext.Drivers.Any(d => d.Id == id))
                 {
                     return NotFound(new
                     {
@@ -170,8 +170,7 @@ namespace AuthenticationServices.Controllers
         [HttpDelete("deleteDriver/{id}")]
         public async Task<IActionResult> DeleteDriver(int id)
         {
-            // Delete Driver and DriverInfo
-            var driver = await _dbContext.Drivers.FindAsync(id);
+            var driver = await _dbContext.Drivers.Include(d => d.DriverInfo).FirstOrDefaultAsync(d => d.Id == id);
             if (driver == null)
             {
                 return NotFound(new
@@ -189,7 +188,8 @@ namespace AuthenticationServices.Controllers
                     Status = 200,
                     Message = "Driver deleted successfully"
                 });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
@@ -205,27 +205,162 @@ namespace AuthenticationServices.Controllers
         {
             try
             {
-                var users = await _dbContext.Users.ToListAsync();
-                if (users != null)
+                var users = await _dbContext.Users.Include(u => u.UserInfo).ToListAsync();
+                return Ok(new
                 {
-                    return Ok(new
-                    {
-                        Status = 200,
-                        Data = users
-                    });
-
-                }
-                return NotFound(new
-                {
-                    Status = 404,
-                    Message = "There is no Users in Database"
+                    Status = 200,
+                    Data = users
                 });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
                     Status = 500,
                     Message = "Error! Can't get data from api/v1/admin/getAllUsers - AdminController/AuthenticationServices"
+                });
+            }
+        }
+        
+        [HttpGet("getUserById/{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            try
+            {
+                var user = await _dbContext.Users.Include(u => u.UserInfo).FirstOrDefaultAsync(u => u.Id == id);
+                if (user == null)
+                {
+                    return NotFound(new
+                    {
+                        Status = 404,
+                        Message = "User not found"
+                    });
+                }
+                return Ok(new
+                {
+                    Status = 200,
+                    Data = user
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Status = 500,
+                    Message = "Error! Can't get data from api/v1/admin/getUserById - AdminController/AuthenticationServices"
+                });
+            }
+        }
+
+        [HttpPut("updateUser/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromForm] UserInfoDTO userInfoDto)
+        {
+            var user = await _dbContext.Users.Include(u => u.UserInfo).FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound(new
+                {
+                    Status = 404,
+                    Message = "User not found"
+                });
+            }
+            
+            if (!string.IsNullOrEmpty(userInfoDto.FullName))
+            {
+                user.FullName = userInfoDto.FullName;
+            }
+
+            if (!string.IsNullOrEmpty(userInfoDto.Mobile))
+            {
+                user.UserInfo.Mobile = userInfoDto.Mobile;
+            }
+
+            if (!string.IsNullOrEmpty(userInfoDto.Address))
+            {
+                user.UserInfo.Address = userInfoDto.Address;
+            }
+
+            if (!string.IsNullOrEmpty(userInfoDto.Street))
+            {
+                user.UserInfo.Street = userInfoDto.Street;
+            }
+
+            if (!string.IsNullOrEmpty(userInfoDto.Ward))
+            {
+                user.UserInfo.Ward = userInfoDto.Ward;
+            }
+
+            if (!string.IsNullOrEmpty(userInfoDto.District))
+            {
+                user.UserInfo.District = userInfoDto.District;
+            }
+
+            if (!string.IsNullOrEmpty(userInfoDto.City))
+            {
+                user.UserInfo.City = userInfoDto.City;
+            }
+
+            // if (userInfoDto.PersonalImage != null)
+            // {
+            //     var contentType = BlobContentTypes.GetContentType(userInfoDto.PersonalImage);
+            //     user.UserInfo.Image = await _blobServices.UploadBlobWithContentTypeAsync(userInfoDto.PersonalImage, contentType);
+            // }
+            
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+                return Ok(new
+                {
+                    Status = 200,
+                    Message = "User updated successfully"
+                });
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                if (!_dbContext.Users.Any(u => u.Id == id))
+                {
+                    return NotFound(new
+                    {
+                        Status = 404,
+                        Message = "User not found - api/v1/admin/updateUser - AdminController/AuthenticationServices"
+                    });
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Status = 500,
+                    Message = "Error! Can't update data from api/v1/admin/updateUser - AdminController/AuthenticationServices"
+                });
+            }
+        }
+        
+        [HttpDelete("deleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _dbContext.Users.Include(u => u.UserInfo).FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound(new
+                {
+                    Status = 404,
+                    Message = "User not found"
+                });
+            }
+            try
+            {
+                _dbContext.Users.Remove(user);
+                await _dbContext.SaveChangesAsync();
+                return Ok(new
+                {
+                    Status = 200,
+                    Message = "User deleted successfully"
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Status = 500,
+                    Message = "Error! Can't delete data from api/v1/admin/deleteUser - AdminController/AuthenticationServices"
                 });
             }
         }
@@ -246,7 +381,7 @@ namespace AuthenticationServices.Controllers
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, new
                 {
-                    Message = "Error by Server , check try block at Authorize method of AuthenticationService.DriverController",
+                    Message = "Error by Server, check try block at Authorize method of AuthenticationService.DriverController",
                     Details = ex.Message
                 });
             }
