@@ -2,6 +2,7 @@ using AuthenticationServices.Database;
 using AuthenticationServices.DTOs;
 using AuthenticationServices.Helper;
 using AuthenticationServices.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -80,7 +81,8 @@ namespace AuthenticationServices.Controllers
         {
             try
             {
-                var existingDriver = await _dbContext.Drivers.FirstOrDefaultAsync(d => d.DriverMobile == CheckingPattern.RemovePrefixMobile(loginDto.Identifier));
+                var drivers = await _dbContext.Drivers.ToListAsync();
+                var existingDriver = drivers.FirstOrDefault(d => CheckingPattern.RemovePrefixMobile(d.DriverMobile) == loginDto.Identifier);
                 if (existingDriver == null || !PasswordHelper.VerifyPassword(loginDto.Password, existingDriver.Password))
                 {
                     return BadRequest(new
@@ -100,7 +102,8 @@ namespace AuthenticationServices.Controllers
                 {
                     Message = "Driver logged in successfully",
                     Driver = existingDriver,
-                    Token = token
+                    Token = token,
+                    RefreshToken = existingDriver.RefreshToken
                 });
             }
             catch (Exception ex)
@@ -138,6 +141,29 @@ namespace AuthenticationServices.Controllers
                 Token = tokenString,
                 RefreshToken = driver.RefreshToken
             });
+        }
+        
+        // Test AUTHORIZE DRIVER
+        [HttpGet("authorize")]
+        [Authorize(Roles = "Driver")]
+        public IActionResult TestAuthorize()
+        {
+            try
+            {
+                return Ok(new
+                {
+                    Message = "Driver authorized successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Message = "An error for REQUEST - method GET - api/Driver/authorize - DriverController",
+                    Error = ex.Message,
+                    ErrorStack = ex.StackTrace
+                });
+            }
         }
     }
 }

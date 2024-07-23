@@ -1,6 +1,7 @@
 using AuthenticationServices.Database;
 using AuthenticationServices.DTOs;
 using AuthenticationServices.Helper;
+using AuthenticationServices.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -80,10 +81,7 @@ namespace AuthenticationServices.Controllers
         [HttpPut("updateDriver/{id}")]
         public async Task<IActionResult> UpdateDriver(int id, [FromForm] DriverInfoDto driverInfoDto)
         {
-            var driver = await _dbContext
-                .Drivers
-                .Include(d => d.DriverInfo)
-                .FirstOrDefaultAsync(d => d.Id == id);
+            var driver = await _dbContext.Drivers.Include(d => d.DriverInfo).FirstOrDefaultAsync(d => d.Id == id);
             if (driver == null)
             {
                 return NotFound(new
@@ -91,6 +89,16 @@ namespace AuthenticationServices.Controllers
                     Status = 404,
                     Message = "Driver not found"
                 });
+            }
+
+            // Ensure DriverInfo is not null
+            if (driver.DriverInfo == null)
+            {
+                driver.DriverInfo = new DriverInfo
+                {
+                    DriverId = driver.Id
+                };
+                _dbContext.DriverInfos.Add(driver.DriverInfo);
             }
 
             if (!string.IsNullOrEmpty(driverInfoDto.DriverFullName))
@@ -139,7 +147,7 @@ namespace AuthenticationServices.Controllers
             //     var contentType = BlobContentTypes.GetContentType(driverInfoDto.DriverLicenseImage);
             //     driver.DriverInfo.DriverLicenseImage = await _blobServices.UploadBlobWithContentTypeAsync(driverInfoDto.DriverLicenseImage, contentType);
             // }
-            
+
             try
             {
                 await _dbContext.SaveChangesAsync();
@@ -166,6 +174,7 @@ namespace AuthenticationServices.Controllers
                 });
             }
         }
+
         
         [HttpDelete("deleteDriver/{id}")]
         public async Task<IActionResult> DeleteDriver(int id)
@@ -264,7 +273,17 @@ namespace AuthenticationServices.Controllers
                     Message = "User not found"
                 });
             }
-            
+
+            // Ensure UserInfo is not null
+            if (user.UserInfo == null)
+            {
+                user.UserInfo = new UserInfo
+                {
+                    UserId = user.Id
+                };
+                _dbContext.UserInfos.Add(user.UserInfo);
+            }
+
             if (!string.IsNullOrEmpty(userInfoDto.FullName))
             {
                 user.FullName = userInfoDto.FullName;
@@ -305,7 +324,7 @@ namespace AuthenticationServices.Controllers
             //     var contentType = BlobContentTypes.GetContentType(userInfoDto.PersonalImage);
             //     user.UserInfo.Image = await _blobServices.UploadBlobWithContentTypeAsync(userInfoDto.PersonalImage, contentType);
             // }
-            
+
             try
             {
                 await _dbContext.SaveChangesAsync();
@@ -332,6 +351,7 @@ namespace AuthenticationServices.Controllers
                 });
             }
         }
+
         
         [HttpDelete("deleteUser/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
@@ -379,7 +399,7 @@ namespace AuthenticationServices.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, new
+                return Unauthorized( new
                 {
                     Message = "Error by Server, check try block at Authorize method of AuthenticationService.DriverController",
                     Details = ex.Message
