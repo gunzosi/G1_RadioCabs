@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyServices", "CompanyS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisClient", "RedisClient\RedisClient.csproj", "{178755B6-40B9-46FE-A3DA-4816BACDEAF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentServices", "PaymentServices\PaymentServices.csproj", "{97EEF378-9507-45EC-8D78-455A33B515D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedbackServices", "FeedbackServices\FeedbackServices.csproj", "{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{178755B6-40B9-46FE-A3DA-4816BACDEAF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{178755B6-40B9-46FE-A3DA-4816BACDEAF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{178755B6-40B9-46FE-A3DA-4816BACDEAF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97EEF378-9507-45EC-8D78-455A33B515D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97EEF378-9507-45EC-8D78-455A33B515D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97EEF378-9507-45EC-8D78-455A33B515D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97EEF378-9507-45EC-8D78-455A33B515D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

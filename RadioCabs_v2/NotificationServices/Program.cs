@@ -48,7 +48,7 @@ redisClient.Subscribe("user_register", async (channel, message) =>
 });
 
 
-// REDIS MOBLIE
+// REDIS EMAIL
 redisClient.Subscribe("driver_register", async (channel, message) =>
 {
     var parts = message.ToString().Split('|');
