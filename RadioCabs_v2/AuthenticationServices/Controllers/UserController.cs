@@ -143,7 +143,8 @@ namespace AuthenticationServices.Controllers
                 {
                     Status = 200,
                     Data = existUser,
-                    Token = token
+                    Token = token,
+                    RefreshToken = existUser.RefreshToken
                 });
             }
             catch (Exception e)

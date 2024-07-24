@@ -52,6 +52,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
+// 5. Dependency Injection 
+
+
 var app = builder.Build();
 
 // CORS - Cross Origin Resource Sharing

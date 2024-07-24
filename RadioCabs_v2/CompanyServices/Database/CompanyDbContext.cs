@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CompanyServices.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyServices.Database;
 
@@ -8,5 +9,21 @@ public class CompanyDbContext : DbContext
     {
     }
     
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<CompanyService> CompanyServices { get; set; }
+    public DbSet<CompanyLocationService> CompanyLocationServices { get; set; }
     
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        
+        modelBuilder.Entity<Models.Company>()
+            .HasMany(c => c.CompanyServices)
+            .WithOne(cs => cs.Company)
+            .HasForeignKey(cs => cs.CompanyId);
+        
+        modelBuilder.Entity<Models.Company>()
+            .HasMany(c => c.CompanyLocationServices)
+            .WithOne(cls => cls.Company)
+            .HasForeignKey(cls => cls.CompanyId);
+    }
 }

@@ -74,8 +74,7 @@
               "RelativeToolTip": "AuthenticationServices\\Models\\UserInfo.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T17:43:01.898Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T17:43:01.898Z"
             },
             {
               "$type": "Document",
@@ -87,8 +86,7 @@
               "RelativeToolTip": "AuthenticationServices\\Models\\User.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T17:36:45.598Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T17:36:45.598Z"
             },
             {
               "$type": "Document",
@@ -100,8 +98,7 @@
               "RelativeToolTip": "AuthenticationServices\\Models\\DriverInfo.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T17:35:51.687Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T17:35:51.687Z"
             },
             {
               "$type": "Document",
@@ -111,7 +108,7 @@
               "RelativeDocumentMoniker": "AuthenticationServices\\Models\\Driver.cs",
               "ToolTip": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Models\\Driver.cs",
               "RelativeToolTip": "AuthenticationServices\\Models\\Driver.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAXAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-22T14:56:57.575Z",
               "EditorCaption": ""
@@ -126,8 +123,7 @@
               "RelativeToolTip": "AuthenticationServices\\Program.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T14:41:16.446Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T14:41:16.446Z"
             },
             {
               "$type": "Document",
@@ -139,8 +135,7 @@
               "RelativeToolTip": "AuthenticationServices\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-07-22T14:41:13.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T14:41:13.249Z"
             },
             {
               "$type": "Document",
@@ -152,8 +147,7 @@
               "RelativeToolTip": "NotificationServices\\NotificationServices.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-07-22T12:52:06.886Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T12:52:06.886Z"
             },
             {
               "$type": "Document",
@@ -165,8 +159,7 @@
               "RelativeToolTip": "CompanyServices\\CompanyServices.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-07-22T12:51:53.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T12:51:53.132Z"
             },
             {
               "$type": "Document",
@@ -178,8 +171,7 @@
               "RelativeToolTip": "RedisClient\\RedisClient.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-07-22T12:51:02.891Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T12:51:02.891Z"
             }
           ]
         }

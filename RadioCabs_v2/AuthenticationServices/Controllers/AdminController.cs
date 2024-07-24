@@ -214,7 +214,15 @@ namespace AuthenticationServices.Controllers
         {
             try
             {
-                var users = await _dbContext.Users.Include(u => u.UserInfo).ToListAsync();
+                // Query the Users table in the database context
+                // Filter records where the Role is "User"
+                // Include the related UserInfo data for each user
+                var users = await _dbContext.Users
+                    .Where(u => u.Role == "User") 
+                    .Include(u => u.UserInfo)
+                    .ToListAsync();
+
+                // Return an OK status code with the list of users
                 return Ok(new
                 {
                     Status = 200,
@@ -223,6 +231,7 @@ namespace AuthenticationServices.Controllers
             }
             catch (Exception e)
             {
+                // If an exception occurs, return an Internal Server Error status code
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
                     Status = 500,
@@ -230,6 +239,7 @@ namespace AuthenticationServices.Controllers
                 });
             }
         }
+
         
         [HttpGet("getUserById/{id}")]
         public async Task<IActionResult> GetUserById(int id)
@@ -348,6 +358,31 @@ namespace AuthenticationServices.Controllers
                 {
                     Status = 500,
                     Message = "Error! Can't update data from api/v1/admin/updateUser - AdminController/AuthenticationServices"
+                });
+            }
+        }
+        
+        [HttpGet("getUserByRole/{role}")]
+        public async Task<IActionResult> GetUserByRole(string role)
+        {
+            try
+            {
+                var users = await _dbContext.Users
+                    .Where(u => u.Role == role)
+                    .Include(u => u.UserInfo)
+                    .ToListAsync();
+                return Ok(new
+                {
+                    Status = 200,
+                    Data = users
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Status = 500,
+                    Message = "Error! Can't get data from api/v1/admin/getUserByRole - AdminController/AuthenticationServices"
                 });
             }
         }

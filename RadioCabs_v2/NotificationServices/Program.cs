@@ -48,8 +48,8 @@ redisClient.Subscribe("user_register", async (channel, message) =>
 });
 
 
-// REDIS EMAIL
-redisClient.Subscribe("driver_register", async (channel, message) =>
+// REDIS COMPANY
+redisClient.Subscribe("company_register", async (channel, message) =>
 {
     var parts = message.ToString().Split('|');
     var emailService = app.Services.GetRequiredService<EmailServices>();
@@ -58,7 +58,7 @@ redisClient.Subscribe("driver_register", async (channel, message) =>
         ToMail = parts[1],
         Subject = "Welcome to RadioCabs",
         HtmlContent = $"Hello {parts[0]}, " +
-                      $"<br> Welcome to RadioCabs. <br> Your account has been created successfully."+
+                      $"<br> Welcome to RadioCabs. <br> Your COMPANY has been created successfully."+
                       $"Your Driver Code is: {parts[2]}"
     });
 });
