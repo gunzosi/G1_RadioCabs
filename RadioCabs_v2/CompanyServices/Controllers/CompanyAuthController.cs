@@ -1,12 +1,10 @@
-using System.Drawing;
-using AuthenticationServices.DTOs;
+using CompanyServices.DTOs;
 using AuthenticationServices.Helper;
 using CompanyServices.Database;
+using CompanyServices.DTO;
 using CompanyServices.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 using RedisClient;
 

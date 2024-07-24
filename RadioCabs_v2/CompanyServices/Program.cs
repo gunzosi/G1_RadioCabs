@@ -1,5 +1,7 @@
 using System.Text;
+using CompanyServices.Services;
 using CompanyServices.Database;
+using CompanyServices.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -53,7 +55,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 // 5. Dependency Injection 
-
+builder.Services.AddScoped<IBlobServices, BlobServices>();
 
 var app = builder.Build();
 

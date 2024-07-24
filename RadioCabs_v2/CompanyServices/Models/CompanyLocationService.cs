@@ -11,8 +11,7 @@ public class CompanyLocationService
     public int Id { get; set; }
     [ForeignKey("Company")]
     public int CompanyId { get; set; }
-    [Required]
-    [StringLength(255)]
+
     public string? CityService { get; set; }
     [JsonIgnore]
     public virtual Company? Company { get; set; }

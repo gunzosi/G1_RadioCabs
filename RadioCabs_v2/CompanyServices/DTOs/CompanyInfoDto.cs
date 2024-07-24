@@ -1,4 +1,4 @@
-﻿namespace AuthenticationServices.DTOs;
+﻿namespace CompanyServices.DTO;
 
 public class CompanyInfoDto
 {

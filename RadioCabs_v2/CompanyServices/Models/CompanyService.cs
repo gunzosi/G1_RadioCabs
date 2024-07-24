@@ -11,7 +11,7 @@ public class CompanyService
     public int Id { get; set; }
     [ForeignKey("Company")]
     public int CompanyId { get; set; }
-    [Required]
+
     public string? ServiceType { get; set; }
     [JsonIgnore]
     public virtual Company? Company { get; set; }

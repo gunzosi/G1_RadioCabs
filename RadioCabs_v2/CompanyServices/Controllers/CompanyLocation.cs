@@ -1,5 +1,6 @@
-using AuthenticationServices.DTOs;
+using CompanyServices.DTOs;
 using CompanyServices.Database;
+using CompanyServices.DTO;
 using CompanyServices.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

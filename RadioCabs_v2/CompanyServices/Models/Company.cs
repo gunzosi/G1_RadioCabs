@@ -10,13 +10,13 @@ public class Company
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     // login
-    [Required]
+
     public string CompanyName { get; set; }
-    [Required]
+
     public string CompanyTaxCode { get; set; }
-    [Required]
+
     public string CompanyEmail { get; set; }
-    [Required]
+
     public string CompanyPassword { get; set; }
     public string? Role { get; set; }
     
