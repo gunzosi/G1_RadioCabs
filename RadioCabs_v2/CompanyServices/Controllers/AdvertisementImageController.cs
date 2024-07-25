@@ -1,4 +1,4 @@
-using CompanyServices.DTO;
+using CompanyServices.DTOs;
 using CompanyServices.Database;
 using CompanyServices.Models;
 using Microsoft.AspNetCore.Http;

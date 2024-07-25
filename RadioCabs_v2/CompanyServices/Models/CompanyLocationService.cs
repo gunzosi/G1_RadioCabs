@@ -10,7 +10,7 @@ public class CompanyLocationService
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     [ForeignKey("Company")]
-    public int CompanyId { get; set; }
+    public int? CompanyId { get; set; }
 
     public string? CityService { get; set; }
     [JsonIgnore]

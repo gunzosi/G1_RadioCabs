@@ -1,7 +1,7 @@
 using CompanyServices.DTOs;
 using AuthenticationServices.Helper;
 using CompanyServices.Database;
-using CompanyServices.DTO;
+using CompanyServices.DTOs;
 using CompanyServices.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

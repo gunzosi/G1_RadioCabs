@@ -1,6 +1,7 @@
 using System.Security.Cryptography.Pkcs;
 using CompanyServices.Database;
-using CompanyServices.DTO;
+using CompanyServices.DTOs;
+using CompanyServices.DTOs;
 using CompanyServices.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,8 +1,6 @@
 ﻿namespace CompanyServices.DTOs;
 
-public class CompanyServicesDto
+public class UpdateCompanyServiceDto
 {
-    public int CompanyId { get; set; }
     public string? ServiceType { get; set; }
 }
-

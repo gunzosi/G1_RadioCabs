@@ -10,7 +10,7 @@ public class CompanyService
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     [ForeignKey("Company")]
-    public int CompanyId { get; set; }
+    public int? CompanyId { get; set; }
 
     public string? ServiceType { get; set; }
     [JsonIgnore]

@@ -1,4 +1,4 @@
-﻿namespace CompanyServices.DTO;
+﻿namespace CompanyServices.DTOs;
 
 public class AdvertisementImageDto
 {
