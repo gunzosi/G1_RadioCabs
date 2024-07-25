@@ -62,7 +62,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 // 5. Dependencies Injection
-builder.Services.AddScoped<IBlobServices, BlobServices>();
+//builder.Services.AddScoped<IBlobServices, BlobServices>();
 
 var app = builder.Build();
 
