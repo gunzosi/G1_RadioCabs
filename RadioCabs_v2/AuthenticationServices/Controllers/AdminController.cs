@@ -100,6 +100,29 @@ namespace AuthenticationServices.Controllers
                 };
                 _dbContext.DriverInfos.Add(driver.DriverInfo);
             }
+            
+            // PASSWORD
+            if (!string.IsNullOrEmpty(driverInfoDto.Password))
+            {
+                driver.Password = BCrypt.Net.BCrypt.HashPassword(driverInfoDto.Password);
+            }
+            
+            // STATUS BOOLEAN
+            if (!string.IsNullOrEmpty(driverInfoDto.Status.ToString()))
+            {
+                driver.Status = driverInfoDto.Status;
+            }
+            // DRIVER MOBILE 
+            if (!string.IsNullOrEmpty(driverInfoDto.DriverMobile))
+            {
+                driver.DriverMobile = driverInfoDto.DriverMobile;
+            }
+            
+            // DRIVER CODE 
+            if (!string.IsNullOrEmpty(driverInfoDto.DriverCode))
+            {
+                driver.DriverCode = driverInfoDto.DriverCode;
+            }
 
             if (!string.IsNullOrEmpty(driverInfoDto.DriverFullName))
             {
@@ -304,6 +327,27 @@ namespace AuthenticationServices.Controllers
                 user.UserInfo.Mobile = userInfoDto.Mobile;
             }
 
+            if (!string.IsNullOrEmpty(userInfoDto.Email))
+            {
+                user.Email = userInfoDto.Email;
+            }
+            
+            if (!string.IsNullOrEmpty(userInfoDto.Password))
+            {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(userInfoDto.Password);
+            }
+            
+            if (!string.IsNullOrEmpty(userInfoDto.Role))
+            {
+                user.Role = userInfoDto.Role;
+            }
+            
+            // Status Boolean
+            if (!string.IsNullOrEmpty(userInfoDto.Status.ToString()))
+            {
+                user.Status = userInfoDto.Status;
+            }
+
             if (!string.IsNullOrEmpty(userInfoDto.Address))
             {
                 user.UserInfo.Address = userInfoDto.Address;
@@ -327,6 +371,11 @@ namespace AuthenticationServices.Controllers
             if (!string.IsNullOrEmpty(userInfoDto.City))
             {
                 user.UserInfo.City = userInfoDto.City;
+            }
+            
+            if (!string.IsNullOrEmpty(userInfoDto.Location))
+            {
+                user.UserInfo.Location = userInfoDto.Location;
             }
 
             // if (userInfoDto.PersonalImage != null)
