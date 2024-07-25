@@ -1,5 +1,5 @@
-using System.Threading.Channels;
 using Microsoft.OpenApi.Models;
+using NotificationServices.ConfigSetting;
 using NotificationServices.Model;
 using NotificationServices.Services;
 using RedisClient;
@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notification API", Version = "v1" });
@@ -21,8 +20,6 @@ builder.Services.AddSwaggerGen(c =>
 // ---- EMAIL SETTINGS ----
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<EmailServices>();
-// -- SMS Settings (Twilio) --
-
 
 // REDIS 
 builder.Services.AddSingleton<RedisClient.REDISCLIENT>(
@@ -30,10 +27,21 @@ builder.Services.AddSingleton<RedisClient.REDISCLIENT>(
         .REDISCLIENT(builder.Configuration.GetValue<string>("Redis:ConnectionStrings")!)
 );
 
-
 var app = builder.Build();
 
-var redisClient = app.Services.GetRequiredService<RedisClient.REDISCLIENT>();
+var redisClient = app.Services.GetRequiredService<REDISCLIENT>();
+redisClient.Subscribe("customer_feedback", async (channel, message) =>
+{
+    var parts = message.ToString().Split('|');
+    var emailService = app.Services.GetRequiredService<EmailServices>();
+    await emailService.SendEmailAsync(new EmailRequest
+    {
+        ToMail = parts[0],
+        Subject = "Thank you for your feedback!",
+        HtmlContent = $"Hello, <br> Thank you for your feedback: \"{parts[1]}\".<br>We appreciate your input!"
+    });
+});
+
 redisClient.Subscribe("user_register", async (channel, message) =>
 {
     var parts = message.ToString().Split('|');
@@ -46,7 +54,6 @@ redisClient.Subscribe("user_register", async (channel, message) =>
                       $"<br> Welcome to RadioCabs. <br> Your account has been created successfully."
     });
 });
-
 
 // REDIS COMPANY
 redisClient.Subscribe("company_register", async (channel, message) =>

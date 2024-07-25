@@ -2,6 +2,7 @@
 using NotificationServices.Model;
 using System.Net;
 using System.Net.Mail;
+using NotificationServices.ConfigSetting;
 
 namespace NotificationServices.Services;
 

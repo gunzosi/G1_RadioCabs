@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
+using RedisClient;
 
 
 namespace CompanyServices.Controllers
@@ -19,10 +19,12 @@ namespace CompanyServices.Controllers
     public class AdvertisementImageController : ControllerBase
     {
         private readonly CompanyDbContext _dbContext;
+        private readonly REDISCLIENT _redisclient;
 
-        public AdvertisementImageController(CompanyDbContext dbContext)
+        public AdvertisementImageController(CompanyDbContext dbContext, REDISCLIENT redisclient)
         {
             _dbContext = dbContext;
+            _redisclient = redisclient;
         }
 
         // Create new advertisement image

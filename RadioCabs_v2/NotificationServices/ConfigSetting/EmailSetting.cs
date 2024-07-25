@@ -1,4 +1,4 @@
-﻿namespace NotificationServices.Model;
+﻿namespace NotificationServices.ConfigSetting;
 
 public class EmailSettings
 {
