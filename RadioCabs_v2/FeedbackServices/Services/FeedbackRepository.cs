@@ -1,7 +1,5 @@
 ﻿using FeedbackServices.Models;
 using MongoDB.Driver;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FeedbackServices.Services
 {
@@ -19,14 +17,9 @@ namespace FeedbackServices.Services
             return await _feedbacks.Find(f => true).ToListAsync();
         }
 
-        public async Task<Feedback> GetByIdAsync(string id)
+        public async Task<Feedback?> GetByIdAsync(string id)
         {
             return await _feedbacks.Find(f => f.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task<Feedback> GetByCustomerEmailAsync(string email)
-        {
-            return await _feedbacks.Find(f => f.Email == email).FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(Feedback feedback)
@@ -42,6 +35,12 @@ namespace FeedbackServices.Services
         public async Task DeleteAsync(string id)
         {
             await _feedbacks.DeleteOneAsync(f => f.Id == id);
+        }
+
+        public async Task<List<Feedback>> GetByCustomerEmailAsync(string emailPart)
+        {
+            var filter = Builders<Feedback>.Filter.Regex(f => f.Email, new MongoDB.Bson.BsonRegularExpression(emailPart, "i"));
+            return await _feedbacks.Find(filter).ToListAsync();
         }
     }
 }

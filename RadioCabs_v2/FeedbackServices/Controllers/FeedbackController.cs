@@ -1,12 +1,8 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using FeedbackServices.DTOs;
 using FeedbackServices.Models;
 using FeedbackServices.Services;
 using Microsoft.AspNetCore.Mvc;
 using RedisClient;
-using System;
-using System.Threading.Tasks;
 
 namespace FeedbackServices.Controllers
 {
@@ -16,15 +12,15 @@ namespace FeedbackServices.Controllers
     {
         private readonly FeedbackRepository _repository;
         private readonly REDISCLIENT _redisclient;
-
+        
         public FeedbackController(FeedbackRepository repository, REDISCLIENT redisclient)
         {
             _repository = repository;
             _redisclient = redisclient;
         }
-
-        // READ ALL FEEDBACK từ ADMIN
-        [HttpGet("feedback/GetAllFeedback")]
+        
+        // READ ALL FEEDBACK
+        [HttpGet("GetAllFeedback")]
         public async Task<IActionResult> GetAllFeedback()
         {
             try
@@ -37,9 +33,9 @@ namespace FeedbackServices.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-
+        
         // CREATE Feedback
-        [HttpPost("feedback/CreateFeedback")]
+        [HttpPost("CreateFeedback")]
         public async Task<IActionResult> CreateFeedback([FromBody] FeedbackDto feedbackDto)
         {
             try
@@ -50,10 +46,9 @@ namespace FeedbackServices.Controllers
                     Text = feedbackDto.Text,
                     CreatedAt = DateTime.Now
                 };
-
+                
                 await _repository.CreateAsync(feedback);
                 _redisclient.Publish("customer_feedback", $"{feedback.Email}");
-
                 return CreatedAtAction(nameof(GetByFeedbackId), new { id = feedback.Id }, feedback);
             }
             catch (Exception e)
@@ -66,9 +61,9 @@ namespace FeedbackServices.Controllers
                 });
             }
         }
-
+        
         // GET FEEDBACK BY ID
-        [HttpGet("feedback/GetByFeedbackId/{id}")]
+        [HttpGet("GetByFeedbackId/{id}")]
         public async Task<IActionResult> GetByFeedbackId(string id)
         {
             try
@@ -99,15 +94,15 @@ namespace FeedbackServices.Controllers
                 });
             }
         }
-
+        
         // GET FEEDBACK BY EMAIL CUSTOMER
-        [HttpGet("feedback/customer/{email}")]
-        public async Task<IActionResult> GetByCustomerEmail(string email)
+        [HttpPost("GetByCustomerEmail")]
+        public async Task<IActionResult> GetByCustomerEmail([FromBody] EmailRequestDto emailRequestDto)
         {
             try
             {
-                var feedback = await _repository.GetByCustomerEmailAsync(email);
-                if (feedback == null)
+                var feedbacks = await _repository.GetByCustomerEmailAsync(emailRequestDto.Email);
+                if (feedbacks == null || feedbacks.Count == 0)
                 {
                     return NotFound(new
                     {
@@ -118,7 +113,7 @@ namespace FeedbackServices.Controllers
                 return Ok(new
                 {
                     Status = 200,
-                    Data = feedback
+                    Data = feedbacks
                 });
             }
             catch (Exception ex)
@@ -131,9 +126,9 @@ namespace FeedbackServices.Controllers
                 });
             }
         }
-
+        
         // DELETE Feedback
-        [HttpDelete("feedback/DeleteFeedback/{id}")]
+        [HttpDelete("DeleteFeedback/{id}")]
         public async Task<IActionResult> DeleteFeedback(string id)
         {
             try
@@ -166,4 +161,3 @@ namespace FeedbackServices.Controllers
         }
     }
 }
-
