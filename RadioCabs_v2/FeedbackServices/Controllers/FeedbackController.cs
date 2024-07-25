@@ -1,11 +1,12 @@
-using FeedbackServices.DTOs;
-using FeedbackServices.Models;
-using FeedbackServices.Repository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using FeedbackServices.DTOs;
+using FeedbackServices.Models;
+using FeedbackServices.Services;
+using Microsoft.AspNetCore.Mvc;
 using RedisClient;
+using System;
+using System.Threading.Tasks;
 
 namespace FeedbackServices.Controllers
 {
@@ -15,16 +16,15 @@ namespace FeedbackServices.Controllers
     {
         private readonly FeedbackRepository _repository;
         private readonly REDISCLIENT _redisclient;
-        
+
         public FeedbackController(FeedbackRepository repository, REDISCLIENT redisclient)
         {
             _repository = repository;
             _redisclient = redisclient;
         }
-        
-        // READ ALL FEEDBACK
+
+        // READ ALL FEEDBACK từ ADMIN
         [HttpGet("feedback/GetAllFeedback")]
-        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllFeedback()
         {
             try
@@ -37,10 +37,7 @@ namespace FeedbackServices.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-        
-        // GET FEEDBACK BY ID / EMAIL 
-        
-        
+
         // CREATE Feedback
         [HttpPost("feedback/CreateFeedback")]
         public async Task<IActionResult> CreateFeedback([FromBody] FeedbackDto feedbackDto)
@@ -53,14 +50,10 @@ namespace FeedbackServices.Controllers
                     Text = feedbackDto.Text,
                     CreatedAt = DateTime.Now
                 };
-                
+
                 await _repository.CreateAsync(feedback);
                 _redisclient.Publish("customer_feedback", $"{feedback.Email}");
-                // return Ok(new
-                // {
-                //     Status = 200,
-                //     Message = "Feedback created successfully"
-                // });
+
                 return CreatedAtAction(nameof(GetByFeedbackId), new { id = feedback.Id }, feedback);
             }
             catch (Exception e)
@@ -73,7 +66,7 @@ namespace FeedbackServices.Controllers
                 });
             }
         }
-        
+
         // GET FEEDBACK BY ID
         [HttpGet("feedback/GetByFeedbackId/{id}")]
         public async Task<IActionResult> GetByFeedbackId(string id)
@@ -106,7 +99,7 @@ namespace FeedbackServices.Controllers
                 });
             }
         }
-        
+
         // GET FEEDBACK BY EMAIL CUSTOMER
         [HttpGet("feedback/customer/{email}")]
         public async Task<IActionResult> GetByCustomerEmail(string email)
@@ -122,7 +115,7 @@ namespace FeedbackServices.Controllers
                         Message = "Feedback not found"
                     });
                 }
-                return  Ok(new
+                return Ok(new
                 {
                     Status = 200,
                     Data = feedback
@@ -138,8 +131,8 @@ namespace FeedbackServices.Controllers
                 });
             }
         }
-        
-        
+
+        // DELETE Feedback
         [HttpDelete("feedback/DeleteFeedback/{id}")]
         public async Task<IActionResult> DeleteFeedback(string id)
         {
@@ -171,7 +164,6 @@ namespace FeedbackServices.Controllers
                 });
             }
         }
-        
-        
     }
 }
+

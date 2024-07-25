@@ -1,5 +1,7 @@
-using FeedbackServices.Database;
-using FeedbackServices.Repository;
+
+
+using FeedbackServices.Models;
+using FeedbackServices.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,27 +12,35 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 1. MONGODB - Add services to the container.
+// 1. Database 
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
-builder.Services.AddSingleton<MongoDbContext>();
+builder.Services.AddSingleton<DatabaseContext>();
 builder.Services.AddScoped<FeedbackRepository>();
-builder.Services.AddControllers();
+
+
+// 2. Redis
+builder.Services.AddSingleton<RedisClient.REDISCLIENT>(
+    provider => new RedisClient
+        .REDISCLIENT(builder.Configuration.GetValue<string>("Redis:ConnectionStrings")!)
+);
+
+
+// 4. Cycle Reference - Infinity JSON
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
+
+// 5. Dependency Injection 
+// builder.Services.AddScoped<IBlobServices, BlobServices>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
-
-
-app = builder.Build();
+// CORS - Cross Origin Resource Sharing
+app.UseCors(corsPolicyBuilder => corsPolicyBuilder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

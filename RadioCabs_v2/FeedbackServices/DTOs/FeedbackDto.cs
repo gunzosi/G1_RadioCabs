@@ -1,7 +1,8 @@
-﻿namespace FeedbackServices.DTOs;
-
-public class FeedbackDto
+﻿namespace FeedbackServices.DTOs
 {
-    public string Email { get; set; }
-    public string Text { get; set; }
+    public class FeedbackDto
+    {
+        public string Email { get; set; }
+        public string Text { get; set; }
+    }
 }

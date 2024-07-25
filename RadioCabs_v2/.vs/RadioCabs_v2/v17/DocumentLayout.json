@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}|FeedbackServices\\FeedbackServices.csproj|d:\\rider-project\\g1_radiocabs\\radiocabs_v2\\feedbackservices\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}|FeedbackServices\\FeedbackServices.csproj|solutionrelative:feedbackservices\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}|FeedbackServices\\FeedbackServices.csproj|d:\\rider-project\\g1_radiocabs\\radiocabs_v2\\feedbackservices\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4DAA8A52-3AFE-4A1E-8B05-552B526603FB}|FeedbackServices\\FeedbackServices.csproj|solutionrelative:feedbackservices\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAA59375-15FB-409D-A352-C1FC3A47EDEC}|AuthenticationServices\\AuthenticationServices.csproj|d:\\rider-project\\g1_radiocabs\\radiocabs_v2\\authenticationservices\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAA59375-15FB-409D-A352-C1FC3A47EDEC}|AuthenticationServices\\AuthenticationServices.csproj|solutionrelative:authenticationservices\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{97EEF378-9507-45EC-8D78-455A33B515D5}|PaymentServices\\PaymentServices.csproj|d:\\rider-project\\g1_radiocabs\\radiocabs_v2\\paymentservices\\paymentservices.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{97EEF378-9507-45EC-8D78-455A33B515D5}|PaymentServices\\PaymentServices.csproj|solutionrelative:paymentservices\\paymentservices.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -29,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CAA59375-15FB-409D-A352-C1FC3A47EDEC}|AuthenticationServices\\AuthenticationServices.csproj|d:\\rider-project\\g1_radiocabs\\radiocabs_v2\\authenticationservices\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAA59375-15FB-409D-A352-C1FC3A47EDEC}|AuthenticationServices\\AuthenticationServices.csproj|solutionrelative:authenticationservices\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CAA59375-15FB-409D-A352-C1FC3A47EDEC}|AuthenticationServices\\AuthenticationServices.csproj|d:\\rider-project\\g1_radiocabs\\radiocabs_v2\\authenticationservices\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAA59375-15FB-409D-A352-C1FC3A47EDEC}|AuthenticationServices\\AuthenticationServices.csproj|solutionrelative:authenticationservices\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CAA59375-15FB-409D-A352-C1FC3A47EDEC}|AuthenticationServices\\AuthenticationServices.csproj|d:\\rider-project\\g1_radiocabs\\radiocabs_v2\\authenticationservices\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -79,6 +87,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\FeedbackServices\\Program.cs",
+              "RelativeDocumentMoniker": "FeedbackServices\\Program.cs",
+              "ToolTip": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\FeedbackServices\\Program.cs",
+              "RelativeToolTip": "FeedbackServices\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T05:54:46.816Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\FeedbackServices\\appsettings.json",
+              "RelativeDocumentMoniker": "FeedbackServices\\appsettings.json",
+              "ToolTip": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\FeedbackServices\\appsettings.json",
+              "RelativeToolTip": "FeedbackServices\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-25T05:50:47.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "PaymentServices",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\PaymentServices\\PaymentServices.csproj",
               "RelativeDocumentMoniker": "PaymentServices\\PaymentServices.csproj",
@@ -91,7 +125,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "FeedbackServices",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\FeedbackServices\\FeedbackServices.csproj",
               "RelativeDocumentMoniker": "FeedbackServices\\FeedbackServices.csproj",
@@ -104,7 +138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "BlobContentTypes.cs",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Helper\\BlobContentTypes.cs",
               "RelativeDocumentMoniker": "AuthenticationServices\\Helper\\BlobContentTypes.cs",
@@ -117,7 +151,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "UserInfo.cs",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Models\\UserInfo.cs",
               "RelativeDocumentMoniker": "AuthenticationServices\\Models\\UserInfo.cs",
@@ -129,7 +163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Models\\User.cs",
               "RelativeDocumentMoniker": "AuthenticationServices\\Models\\User.cs",
@@ -141,7 +175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "DriverInfo.cs",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Models\\DriverInfo.cs",
               "RelativeDocumentMoniker": "AuthenticationServices\\Models\\DriverInfo.cs",
@@ -153,7 +187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Driver.cs",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Models\\Driver.cs",
               "RelativeDocumentMoniker": "AuthenticationServices\\Models\\Driver.cs",
@@ -166,19 +200,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Program.cs",
               "RelativeDocumentMoniker": "AuthenticationServices\\Program.cs",
               "ToolTip": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\Program.cs",
               "RelativeToolTip": "AuthenticationServices\\Program.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAABAAAA",
+              "ViewState": "AQIAADkAAAAAAAAAAAAAAEIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T14:41:16.446Z"
+              "WhenOpened": "2024-07-22T14:41:16.446Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\AuthenticationServices\\appsettings.json",
               "RelativeDocumentMoniker": "AuthenticationServices\\appsettings.json",
@@ -190,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "NotificationServices.csproj",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\NotificationServices\\NotificationServices.csproj",
               "RelativeDocumentMoniker": "NotificationServices\\NotificationServices.csproj",
@@ -203,7 +238,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "CompanyServices.csproj",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\CompanyServices\\CompanyServices.csproj",
               "RelativeDocumentMoniker": "CompanyServices\\CompanyServices.csproj",
@@ -216,7 +251,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "RedisClient.csproj",
               "DocumentMoniker": "D:\\Rider-Project\\G1_RadioCabs\\RadioCabs_v2\\RedisClient\\RedisClient.csproj",
               "RelativeDocumentMoniker": "RedisClient\\RedisClient.csproj",

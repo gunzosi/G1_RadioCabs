@@ -3,7 +3,9 @@
     "",
     "\\RadioCabs_v2",
     "\\RadioCabs_v2\\AuthenticationServices",
-    "\\RadioCabs_v2\\AuthenticationServices\\Models"
+    "\\RadioCabs_v2\\AuthenticationServices\\Helper",
+    "\\RadioCabs_v2\\AuthenticationServices\\Models",
+    "\\RadioCabs_v2\\AuthenticationServices\\Services"
   ],
   "SelectedNode": "\\RadioCabs_v2\\AuthenticationServices\\Models\\Driver.cs",
   "PreviewInSolutionExplorer": false

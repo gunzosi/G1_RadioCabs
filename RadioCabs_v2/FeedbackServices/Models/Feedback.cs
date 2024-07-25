@@ -1,7 +1,8 @@
-﻿using MongoDB.Bson;
+﻿namespace FeedbackServices.Models;
+
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace FeedbackServices.Models;
 
 public class Feedback
 {
