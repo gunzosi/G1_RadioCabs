@@ -276,9 +276,6 @@ namespace CompanyServices.Controllers
         // Helper method to upload image and return URL
         private async Task<string> UploadImageAsync(IFormFile file)
         {
-            // Logic to upload image to cloud storage and return the URL
-            // Example: Use Azure Blob Storage, AWS S3, etc.
-            // For now, return a placeholder URL
             await Task.Delay(500); // Simulate async work
             return "https://placeholder.com/your-uploaded-image-url";
         }
