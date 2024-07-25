@@ -1,8 +1,6 @@
 using CompanyServices.DTOs;
 using CompanyServices.Database;
-using CompanyServices.DTOs;
 using CompanyServices.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RedisClient;
@@ -15,27 +13,25 @@ namespace CompanyServices.Controllers
     {
         private readonly CompanyDbContext _dbContext;
         private readonly IConfiguration _configuration;
-        private readonly REDISCLIENT _redisclient;
-        
-        
-        public CompanyLocation(CompanyDbContext dbContext, IConfiguration configuration, REDISCLIENT redisclient)
+        private readonly REDISCLIENT _redisClient;
+
+        public CompanyLocation(CompanyDbContext dbContext, IConfiguration configuration, REDISCLIENT redisClient)
         {
             _dbContext = dbContext;
             _configuration = configuration;
-            _redisclient = redisclient;
+            _redisClient = redisClient;
         }
-        
-        // CRUD operations for company location
+
+        // Add Location to Company
         [HttpPost("company/location")]
-        public async Task<IActionResult> AddLocation(LocationServiceDto locationService)
+        public async Task<IActionResult> AddLocation(LocationServiceDto locationServiceDto)
         {
             try
             {
-                var existingLocation = await _dbContext
-                    .Companies
+                var existingLocation = await _dbContext.Companies
                     .Include(c => c.CompanyLocationServices)
                     .FirstOrDefaultAsync(cls => cls.CompanyLocationServices
-                        .Any(l => l.CityService == locationService.CityService));
+                        .Any(l => l.CityService == locationServiceDto.CityService));
 
                 if (existingLocation != null)
                 {
@@ -46,7 +42,7 @@ namespace CompanyServices.Controllers
                     });
                 }
 
-                var company = await _dbContext.Companies.FirstOrDefaultAsync(c => c.Id == locationService.CompanyId);
+                var company = await _dbContext.Companies.FirstOrDefaultAsync(c => c.Id == locationServiceDto.CompanyId);
                 if (company == null)
                 {
                     return NotFound(new
@@ -59,13 +55,13 @@ namespace CompanyServices.Controllers
                 var location = new CompanyLocationService
                 {
                     CompanyId = company.Id,
-                    CityService = locationService.CityService
+                    CityService = locationServiceDto.CityService
                 };
 
                 await _dbContext.CompanyLocationServices.AddAsync(location);
                 await _dbContext.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetLocationById), new { id = location.Id }, location);
+                return CreatedAtAction(nameof(GetLocationById), new { locationId = location.Id }, location);
             }
             catch (Exception ex)
             {
@@ -77,13 +73,14 @@ namespace CompanyServices.Controllers
                 });
             }
         }
-        
-        [HttpGet("company/location/{id}")]
-        public async Task<IActionResult> GetLocationById(int id)
+
+        // Get Location by ID
+        [HttpGet("company/location/{locationId}")]
+        public async Task<IActionResult> GetLocationById(int locationId)
         {
             try
             {
-                var location = await _dbContext.CompanyLocationServices.FirstOrDefaultAsync(cls => cls.Id == id);
+                var location = await _dbContext.CompanyLocationServices.FirstOrDefaultAsync(cls => cls.Id == locationId);
                 if (location == null)
                 {
                     return NotFound(new
@@ -105,20 +102,23 @@ namespace CompanyServices.Controllers
                 });
             }
         }
-        
-        // Get All Location At Company id 
-        [HttpGet("company/{id}/locations")]
-        public async Task<IActionResult> GetLocationsByCompanyId(int id)
+
+        // Get All Locations by Company ID
+        [HttpGet("company/{companyId}/locations")]
+        public async Task<IActionResult> GetLocationsByCompanyId(int companyId)
         {
             try
             {
-                var locations = await _dbContext.CompanyLocationServices.Where(cls => cls.CompanyId == id).ToListAsync();
+                var locations = await _dbContext.CompanyLocationServices
+                    .Where(cls => cls.CompanyId == companyId)
+                    .ToListAsync();
+
                 if (locations.Count == 0)
                 {
                     return NotFound(new
                     {
                         StatusCode = 404,
-                        Message = "No location found",
+                        Message = "No locations found",
                     });
                 }
 
@@ -135,12 +135,13 @@ namespace CompanyServices.Controllers
             }
         }
 
-        [HttpPut("company/location/{id}")]
-        public async Task<IActionResult> UpdateLocation(int id, LocationServiceDto locationServiceDto)
+        // Update Location by ID
+        [HttpPut("company/location/{locationId}")]
+        public async Task<IActionResult> UpdateLocation(int locationId, [FromBody] LocationServiceDto locationServiceDto)
         {
             try
             {
-                var location = await _dbContext.CompanyLocationServices.FindAsync(id);
+                var location = await _dbContext.CompanyLocationServices.FindAsync(locationId);
                 if (location == null)
                 {
                     return NotFound(new
@@ -149,7 +150,7 @@ namespace CompanyServices.Controllers
                         Message = "Location not found",
                     });
                 }
-                
+
                 location.CityService = locationServiceDto.CityService;
                 _dbContext.CompanyLocationServices.Update(location);
                 await _dbContext.SaveChangesAsync();
@@ -160,7 +161,8 @@ namespace CompanyServices.Controllers
                     Message = "Location updated successfully",
                     Data = location
                 });
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, new
                 {
@@ -170,13 +172,14 @@ namespace CompanyServices.Controllers
                 });
             }
         }
-        
-        [HttpDelete("company/location/{id}")]
-        public async Task<IActionResult> DeleteLocation(int id)
+
+        // Delete Location by ID
+        [HttpDelete("company/location/{locationId}")]
+        public async Task<IActionResult> DeleteLocation(int locationId)
         {
             try
             {
-                var location = await _dbContext.CompanyLocationServices.FindAsync(id);
+                var location = await _dbContext.CompanyLocationServices.FindAsync(locationId);
                 if (location == null)
                 {
                     return NotFound(new
@@ -205,7 +208,5 @@ namespace CompanyServices.Controllers
                 });
             }
         }
-        
-        
     }
 }
