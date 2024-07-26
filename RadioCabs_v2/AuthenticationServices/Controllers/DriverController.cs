@@ -92,7 +92,7 @@ namespace AuthenticationServices.Controllers
                     });
                 }
 
-                var token = JwtHelper.GenerateToken(existingDriver.DriverMobile, _configuration["Jwt:Key"]!, "Driver");
+                var token = JwtHelper.GenerateToken(existingDriver.Id.ToString(), _configuration["Jwt:Key"]!, "Driver");
                 existingDriver.RefreshToken = Guid.NewGuid().ToString();
                 existingDriver.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(60);
                 
@@ -129,7 +129,7 @@ namespace AuthenticationServices.Controllers
                 });
             }
             
-            var tokenString = JwtHelper.GenerateToken(driver.DriverMobile, _configuration["Jwt:Key"]!, "Driver");
+            var tokenString = JwtHelper.GenerateToken(driver.Id.ToString(), _configuration["Jwt:Key"]!, "Driver");
             driver.RefreshToken = Guid.NewGuid().ToString();
             driver.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(60);
             await _dbContext.SaveChangesAsync();
