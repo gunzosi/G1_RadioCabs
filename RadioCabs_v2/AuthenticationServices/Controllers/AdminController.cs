@@ -160,7 +160,18 @@ namespace AuthenticationServices.Controllers
             }
 
             // Updater DRIVER IMAGE (Subfolder name is "Driver")
-            
+            if (driverInfoDto.DriverPersonalImage != null)
+            {
+                var personalImagePath = await FileUpload.SaveImageAsync("DriverPersonalImages", driverInfoDto.DriverPersonalImage);
+                driver.DriverInfo.DriverPersonalImage = personalImagePath;
+            }
+
+            if (driverInfoDto.DriverLicenseImage != null)
+            {
+                var licenseImagePath = await FileUpload.SaveImageAsync("DriverLicenseImages", driverInfoDto.DriverLicenseImage);
+                driver.DriverInfo.DriverLicenseImage = licenseImagePath;
+            }
+
 
             try
             {
@@ -370,7 +381,11 @@ namespace AuthenticationServices.Controllers
             }
 
             // UPDATE USER IMAGE (Subfolder name is "User")
-            
+            if (userInfoDto.PersonalImage != null)
+            {
+                var personalImagePath = await FileUpload.SaveImageAsync("UserPersonalImages", userInfoDto.PersonalImage);
+                user.UserInfo.Image = personalImagePath;
+            }
 
             try
             {
