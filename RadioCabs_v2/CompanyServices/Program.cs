@@ -4,6 +4,7 @@ using CompanyServices.Database;
 using CompanyServices.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,7 +55,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
-// 5. Dependency Injection 
+// 5. Dependency Injection - DONT USE THIS
 // builder.Services.AddScoped<IBlobServices, BlobServices>();
 
 var app = builder.Build();
@@ -71,6 +72,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// ADD LOGIC IMAGE UPLOAD --------- USE THIS
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+    RequestPath = "/ImageUploads"
+});
 
 app.UseAuthorization();
 
