@@ -1,4 +1,4 @@
-﻿namespace AuthenticationServices.Helper;
+﻿namespace CompanyServices.Helper;
 
 public class BlobContentTypes
 {

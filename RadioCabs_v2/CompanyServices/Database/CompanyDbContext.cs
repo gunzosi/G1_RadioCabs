@@ -13,6 +13,7 @@ public class CompanyDbContext : DbContext
     public DbSet<CompanyService> CompanyServices { get; set; }
     public DbSet<CompanyLocationService> CompanyLocationServices { get; set; }
     public DbSet<AdvertisementImage> AdvertisementImages { get; set; }
+    public DbSet<Payment> Payments { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,5 +32,10 @@ public class CompanyDbContext : DbContext
             .HasMany(c => c.Advertisements)
             .WithOne(ai => ai.Company)
             .HasForeignKey(ai => ai.CompanyId);
+        
+        modelBuilder.Entity<Company>()
+            .HasOne(c => c.Payment)
+            .WithOne(c => c.Company)
+            .HasForeignKey<Payment>(c => c.CompanyId);
     }
 }

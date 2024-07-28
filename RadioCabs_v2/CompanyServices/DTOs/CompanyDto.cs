@@ -6,5 +6,6 @@ public class CompanyDto
     public string? CompanyTaxCode { get; set; }
     public string? CompanyEmail { get; set; }
     public string? CompanyPassword { get; set; }
+    public string? MembershipType { get; set; } // Add this line
     public string? Role { get; set; }
 }

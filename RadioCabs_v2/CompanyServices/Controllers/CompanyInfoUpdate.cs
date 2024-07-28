@@ -29,7 +29,7 @@ namespace CompanyServices.Controllers
         // CRUD 
         // Update company info
         [HttpPut("company/{id}/update")]
-        public async Task<IActionResult> UpdateCompanyInfo(int id, [FromForm] CompanyInfoDto companyInfoDto)
+        public async Task<IActionResult> UpdateCompanyInfo(int id, [FromBody] CompanyInfoDto companyInfoDto)
         {
             try
             {
@@ -96,6 +96,16 @@ namespace CompanyServices.Controllers
                 if (!string.IsNullOrEmpty(companyInfoDto.CompanyCity))
                 {
                     company.CompanyCity = companyInfoDto.CompanyCity;
+                }
+                
+                if (!string.IsNullOrEmpty(companyInfoDto.MembershipType))
+                {
+                    company.MembershipType = companyInfoDto.MembershipType;
+                }
+                
+                if (!string.IsNullOrEmpty(companyInfoDto.IsActive.ToString()))
+                {
+                    company.IsActive = companyInfoDto.IsActive;
                 }
 
                 // if (companyInfoDto.CompanyImage != null && companyInfoDto.CompanyImage.Length > 0)

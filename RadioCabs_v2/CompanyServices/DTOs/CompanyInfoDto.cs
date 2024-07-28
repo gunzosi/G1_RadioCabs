@@ -13,5 +13,8 @@ public class CompanyInfoDto
     public string? CompanyWard { get; set; }
     public string? CompanyDistrict { get; set; }
     public string? CompanyCity { get; set; }
+    
+    public string? MembershipType { get; set; } // 
+    public bool? IsActive { get; set; } //
     public IFormFile? CompanyImage { get; set; }
 }

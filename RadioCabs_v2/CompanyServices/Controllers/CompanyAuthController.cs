@@ -48,6 +48,8 @@ namespace CompanyServices.Controllers
                     CompanyTaxCode = companyDto.CompanyTaxCode,
                     CompanyEmail = companyDto.CompanyEmail,
                     CompanyPassword = PasswordHelper.HashPassword(companyDto.CompanyPassword),
+                    MembershipType = companyDto.MembershipType,
+                    IsActive = false,
                     Role = "Company"
                 };
                 
@@ -59,7 +61,8 @@ namespace CompanyServices.Controllers
                 return Ok(new
                 {
                     Status = 200,
-                    Message = "Company registered successfully"
+                    Message = "Company registered successfully",
+                    data = company.Id
                 });
 
             } catch (Exception e)
@@ -87,6 +90,27 @@ namespace CompanyServices.Controllers
                         Message = "Company not found"
                     });
                 }
+                
+                // ADD More
+                if(!PasswordHelper.VerifyPassword(loginDto.Password, existCompany.CompanyPassword))
+                {
+                    return BadRequest(new
+                    {
+                        StatusCode = 400,
+                        Message = "Password password"
+                    });
+                }
+                
+                if (existCompany.IsActive == false)
+                {
+                    return BadRequest(new
+                    {
+                        StatusCode = 400,
+                        Message = "Your account is unpaid. Please pay to access the admin page."
+                    });
+                }
+                
+                
             
                 var token = JwtHelper.GenerateToken(existCompany.CompanyTaxCode, _configuration["Jwt:Key"], "Company");
                 existCompany.RefreshToken = Guid.NewGuid().ToString();

@@ -31,6 +31,10 @@ public class Company
     public string? CompanyDistrict { get; set; }
     public string? CompanyCity { get; set; }
     
+    public bool? IsActive { get; set; }
+    public string? MembershipType { get; set; }
+  
+    
     // Service Reference
     public int? MembershipId { get; set; }
     
@@ -42,4 +46,5 @@ public class Company
     public virtual ICollection<CompanyService>? CompanyServices { get; set; }
     public virtual ICollection<CompanyLocationService> CompanyLocationServices { get; set; }
     public virtual ICollection<AdvertisementImage>? Advertisements { get; set; }
+    public virtual Payment? Payment { get; set; }
 }
