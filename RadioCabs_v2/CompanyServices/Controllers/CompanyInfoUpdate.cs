@@ -1,12 +1,12 @@
-using System.Security.Cryptography.Pkcs;
-using CompanyServices.Database;
-using CompanyServices.DTOs;
-using CompanyServices.DTOs;
-using CompanyServices.Models;
-using Microsoft.AspNetCore.Http;
+using CompanyServices.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using CompanyServices.Database;
+using CompanyServices.DTOs;
+using CompanyServices.Models;
 using RedisClient;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace CompanyServices.Controllers
 {
@@ -17,19 +17,16 @@ namespace CompanyServices.Controllers
         private readonly CompanyDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly REDISCLIENT _redisclient;
-        
-        
+
         public CompanyInfoUpdate(CompanyDbContext dbContext, IConfiguration configuration, REDISCLIENT redisclient)
         {
             _dbContext = dbContext;
             _configuration = configuration;
             _redisclient = redisclient;
         }
-        
-        // CRUD 
-        // Update company info
+
         [HttpPut("company/{id}/update")]
-        public async Task<IActionResult> UpdateCompanyInfo(int id, [FromBody] CompanyInfoDto companyInfoDto)
+        public async Task<IActionResult> UpdateCompanyInfo(int id, [FromForm] CompanyInfoDto companyInfoDto, IFormFile? formFile)
         {
             try
             {
@@ -42,7 +39,8 @@ namespace CompanyServices.Controllers
                         Message = "Company not found"
                     });
                 }
-                
+
+                // Cập nhật các trường thông tin của công ty
                 if (!string.IsNullOrEmpty(companyInfoDto.CompanyName))
                 {
                     company.CompanyName = companyInfoDto.CompanyName;
@@ -52,12 +50,12 @@ namespace CompanyServices.Controllers
                 {
                     company.CompanyEmail = companyInfoDto.CompanyEmail;
                 }
-                
-                // if (!string.IsNullOrEmpty(companyInfoDto.CompanyPassword))
-                // {
-                //     company.CompanyPassword = companyInfoDto.CompanyPassword;
-                // }
-                
+
+                if (!string.IsNullOrEmpty(companyInfoDto.CompanyPassword))
+                {
+                    company.CompanyPassword = companyInfoDto.CompanyPassword;
+                }
+
                 if (!string.IsNullOrEmpty(companyInfoDto.ContactPersonName))
                 {
                     company.ContactPerson = companyInfoDto.ContactPersonName;
@@ -97,23 +95,23 @@ namespace CompanyServices.Controllers
                 {
                     company.CompanyCity = companyInfoDto.CompanyCity;
                 }
-                
+
                 if (!string.IsNullOrEmpty(companyInfoDto.MembershipType))
                 {
                     company.MembershipType = companyInfoDto.MembershipType;
                 }
-                
-                if (!string.IsNullOrEmpty(companyInfoDto.IsActive.ToString()))
+
+                if (companyInfoDto.IsActive.HasValue)
                 {
-                    company.IsActive = companyInfoDto.IsActive;
+                    company.IsActive = companyInfoDto.IsActive.Value;
                 }
 
-                // if (companyInfoDto.CompanyImage != null && companyInfoDto.CompanyImage.Length > 0)
-                // {
-                //     // Assuming you have a method to upload the image and get the URL
-                //     var contentType = BlobContentTypes.GetContentType(companyInfoDto.CompanyImage);
-                //     company.CompanyImageUrl = await _blobServices.UploadBlobWithContentTypeAsync(companyInfoDto.CompanyImage, contentType);
-                // }
+                // Cập nhật hình ảnh của công ty
+                if (formFile != null && formFile.Length > 0)
+                {
+                    var imagePath = await FileUpload.SaveImageAsync("CompanyImageProfile", formFile);
+                    company.CompanyImageUrl = imagePath;
+                }
 
                 _dbContext.Companies.Update(company);
                 await _dbContext.SaveChangesAsync();
@@ -135,6 +133,5 @@ namespace CompanyServices.Controllers
                 });
             }
         }
-        
     }
 }

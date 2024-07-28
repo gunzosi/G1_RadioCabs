@@ -1,16 +1,15 @@
 using CompanyServices.DTOs;
 using CompanyServices.Database;
+using CompanyServices.Helper;
 using CompanyServices.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RedisClient;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using RedisClient;
-
 
 namespace CompanyServices.Controllers
 {
@@ -29,7 +28,7 @@ namespace CompanyServices.Controllers
 
         // Create new advertisement image
         [HttpPost("create")]
-        public async Task<IActionResult> CreateAdvertisementImage([FromForm] AdvertisementImageDto imageDto)
+        public async Task<IActionResult> CreateAdvertisementImage([FromForm] AdvertisementImageDto imageDto, IFormFile formFile)
         {
             try
             {
@@ -43,7 +42,7 @@ namespace CompanyServices.Controllers
                     });
                 }
 
-                var imageUrl = await UploadImageAsync(imageDto.ImageFile);
+                var imageUrl = await FileUpload.SaveImageAsync("AdvertisementImages", formFile);
 
                 var advertisementImage = new AdvertisementImage
                 {
@@ -157,7 +156,7 @@ namespace CompanyServices.Controllers
 
         // Update advertisement image
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateAdvertisementImage(int id, [FromForm] AdvertisementImageDto imageDto)
+        public async Task<IActionResult> UpdateAdvertisementImage(int id, [FromForm] AdvertisementImageDto imageDto, IFormFile formFile)
         {
             try
             {
@@ -171,9 +170,9 @@ namespace CompanyServices.Controllers
                     });
                 }
 
-                if (imageDto.ImageFile != null && imageDto.ImageFile.Length > 0)
+                if (formFile != null && formFile.Length > 0)
                 {
-                    var imageUrl = await UploadImageAsync(imageDto.ImageFile);
+                    var imageUrl = await FileUpload.SaveImageAsync("AdvertisementImages", formFile);
                     advertisementImage.ImageUrl = imageUrl;
                 }
 
@@ -273,13 +272,6 @@ namespace CompanyServices.Controllers
                     Error = ex.Message
                 });
             }
-        }
-
-        // Helper method to upload image and return URL
-        private async Task<string> UploadImageAsync(IFormFile file)
-        {
-            await Task.Delay(500); // Simulate async work
-            return "https://placeholder.com/your-uploaded-image-url";
         }
     }
 }

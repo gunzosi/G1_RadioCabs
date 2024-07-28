@@ -16,5 +16,5 @@ public class CompanyInfoDto
     
     public string? MembershipType { get; set; } // 
     public bool? IsActive { get; set; } //
-    public IFormFile? CompanyImage { get; set; }
+    public string? CompanyImage { get; set; }
 }
