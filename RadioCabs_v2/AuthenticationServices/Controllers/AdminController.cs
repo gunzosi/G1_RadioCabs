@@ -159,17 +159,8 @@ namespace AuthenticationServices.Controllers
                 driver.DriverInfo.City = driverInfoDto.City;
             }
 
-            // if (driverInfoDto.DriverPersonalImage != null)
-            // {
-            //     var contentType = BlobContentTypes.GetContentType(driverInfoDto.DriverPersonalImage);
-            //     driver.DriverInfo.DriverPersonalImage = await _blobServices.UploadBlobWithContentTypeAsync(driverInfoDto.DriverPersonalImage, contentType);
-            // }
-
-            // if (driverInfoDto.DriverLicenseImage != null)
-            // {
-            //     var contentType = BlobContentTypes.GetContentType(driverInfoDto.DriverLicenseImage);
-            //     driver.DriverInfo.DriverLicenseImage = await _blobServices.UploadBlobWithContentTypeAsync(driverInfoDto.DriverLicenseImage, contentType);
-            // }
+            // Updater DRIVER IMAGE (Subfolder name is "Driver")
+            
 
             try
             {
@@ -378,11 +369,8 @@ namespace AuthenticationServices.Controllers
                 user.UserInfo.Location = userInfoDto.Location;
             }
 
-            // if (userInfoDto.PersonalImage != null)
-            // {
-            //     var contentType = BlobContentTypes.GetContentType(userInfoDto.PersonalImage);
-            //     user.UserInfo.Image = await _blobServices.UploadBlobWithContentTypeAsync(userInfoDto.PersonalImage, contentType);
-            // }
+            // UPDATE USER IMAGE (Subfolder name is "User")
+            
 
             try
             {

@@ -4,18 +4,18 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace CompanyServices.Helper
+namespace AuthenticationServices.Helper
 {
     public class FileUpload
     {
-        private static readonly string _baseFolder = "CompanyImages";
-        private static readonly string _rootUrl = "http://localhost:3819/";
-        // http://localhost:5192
+        private static readonly string _baseFolder = "UserImages";
+        private static readonly string _rootUrl = "http://localhost:11902/";
+        
         public static async  Task<string> SaveImageAsync(string subFolder, IFormFile? formFile)
         {
             try
             {
-                var imageName = $"{Guid.NewGuid()}_{formFile.FileName}";
+                var imageName = $"{Guid.NewGuid()}_{formFile?.FileName}";
                 var imagePath = Path.Combine(Directory.GetCurrentDirectory(), _baseFolder, subFolder);
 
                 if (!Directory.Exists(imagePath))
