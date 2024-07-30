@@ -93,8 +93,14 @@ namespace CompanyServices.Migrations
                     b.Property<string>("Designation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("MembershipId")
                         .HasColumnType("int");
+
+                    b.Property<string>("MembershipType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
@@ -152,6 +158,38 @@ namespace CompanyServices.Migrations
                     b.ToTable("CompanyServices");
                 });
 
+            modelBuilder.Entity("CompanyServices.Models.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContentPayment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsPayment")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("PaymentAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId")
+                        .IsUnique()
+                        .HasFilter("[CompanyId] IS NOT NULL");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("CompanyServices.Models.AdvertisementImage", b =>
                 {
                     b.HasOne("CompanyServices.Models.Company", "Company")
@@ -181,6 +219,15 @@ namespace CompanyServices.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("CompanyServices.Models.Payment", b =>
+                {
+                    b.HasOne("CompanyServices.Models.Company", "Company")
+                        .WithOne("Payment")
+                        .HasForeignKey("CompanyServices.Models.Payment", "CompanyId");
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("CompanyServices.Models.Company", b =>
                 {
                     b.Navigation("Advertisements");
@@ -188,6 +235,8 @@ namespace CompanyServices.Migrations
                     b.Navigation("CompanyLocationServices");
 
                     b.Navigation("CompanyServices");
+
+                    b.Navigation("Payment");
                 });
 #pragma warning restore 612, 618
         }

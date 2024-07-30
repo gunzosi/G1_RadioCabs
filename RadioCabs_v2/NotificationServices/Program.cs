@@ -70,6 +70,20 @@ redisClient.Subscribe("company_register", async (channel, message) =>
     });
 });
 
+// ----- OTP EVENT -----
+redisClient.Subscribe("otp_event", async (channel, message) =>
+{
+    var parts = message.ToString().Split('|');
+    var emailService = app.Services.GetRequiredService<EmailServices>();
+    await emailService.SendEmailAsync(new EmailRequest
+    {
+        ToMail = parts[0],
+        Subject = "Password Reset OTP",
+        HtmlContent = $"Your OTP for password reset is {parts[1]}. It is valid for 15 minutes."
+    });
+});
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

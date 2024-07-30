@@ -31,6 +31,8 @@ namespace CompanyServices.Migrations
                     CompanyWard = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyDistrict = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyCity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    MembershipType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MembershipId = table.Column<int>(type: "int", nullable: true),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -99,6 +101,28 @@ namespace CompanyServices.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<int>(type: "int", nullable: true),
+                    ContentPayment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsPayment = table.Column<bool>(type: "bit", nullable: true),
+                    CompanyId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AdvertisementImages_CompanyId",
                 table: "AdvertisementImages",
@@ -113,6 +137,13 @@ namespace CompanyServices.Migrations
                 name: "IX_CompanyServices_CompanyId",
                 table: "CompanyServices",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_CompanyId",
+                table: "Payments",
+                column: "CompanyId",
+                unique: true,
+                filter: "[CompanyId] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -126,6 +157,9 @@ namespace CompanyServices.Migrations
 
             migrationBuilder.DropTable(
                 name: "CompanyServices");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Companies");

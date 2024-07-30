@@ -14,6 +14,5 @@ public class Payment
     public bool? IsPayment { get; set; }
     [ForeignKey("Company")]
     public int? CompanyId { get; set; }
-    
     public virtual Company? Company { get; set; }
 }

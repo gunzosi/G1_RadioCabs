@@ -76,8 +76,8 @@ if (app.Environment.IsDevelopment())
 // ADD LOGIC IMAGE UPLOAD --------- USE THIS
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
-    RequestPath = "/ImageUploads"
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "CompanyImages")),
+    RequestPath = "/CompanyImages"
 });
 
 app.UseAuthorization();

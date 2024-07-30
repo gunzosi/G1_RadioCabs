@@ -9,7 +9,7 @@ namespace CompanyServices.Helper
     public class FileUpload
     {
         private static readonly string _baseFolder = "CompanyImages";
-        private static readonly string _rootUrl = "http://localhost:3819/";
+        private static readonly string _rootUrl = "http://localhost:3819";
         // http://localhost:5192
         public static async  Task<string> SaveImageAsync(string subFolder, IFormFile? formFile)
         {

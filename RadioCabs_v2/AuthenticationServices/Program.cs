@@ -7,6 +7,7 @@ using StackExchange.Redis;
 using System.Text;
 using AuthenticationServices.Services;
 using AuthenticationServices.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,6 +78,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "UserImages")),
+    RequestPath = "/UserImages"
+});
+
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

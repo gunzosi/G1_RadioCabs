@@ -73,6 +73,11 @@ namespace CompanyServices.Controllers
                 });
             }
         }
+        
+        // Add Array Many at 1 times Location ex : "companyId: 1", cityService : ["city1", "city2", "city3"]
+      
+
+        
 
         // Get Location by ID
         [HttpGet("company/location/{locationId}")]

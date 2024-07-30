@@ -9,7 +9,7 @@ namespace AuthenticationServices.Helper
     public class FileUpload
     {
         private static readonly string _baseFolder = "UserImages";
-        private static readonly string _rootUrl = "http://localhost:11902/";
+        private static readonly string _rootUrl = "http://localhost:11902";
         
         public static async  Task<string> SaveImageAsync(string subFolder, IFormFile? formFile)
         {
