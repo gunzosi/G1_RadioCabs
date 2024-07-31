@@ -65,6 +65,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // 5. Dependencies Injection
 //builder.Services.AddScoped<IBlobServices, BlobServices>();
 
+// 7. Đăng ký HttpClient
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 app.UseCors(corsPolicyBuilder => corsPolicyBuilder

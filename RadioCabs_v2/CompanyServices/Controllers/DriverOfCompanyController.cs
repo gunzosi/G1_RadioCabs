@@ -62,7 +62,7 @@ namespace CompanyServices.Controllers
         public async Task<IActionResult> GetDriversOfCompany(int companyId)
         {
             // /api/DriverCompany/company/1/drivers
-            var url = $"{_defaultUrl + "/api/DriverCompany/" + companyId + "/drivers"}";
+            var url =$"{_defaultUrl}/api/DriverCompany/company/{companyId}/drivers";
             try
             {
                 var response = await _httpClient.GetAsync(url);
