@@ -46,5 +46,8 @@ public class Company
     public virtual ICollection<CompanyService>? CompanyServices { get; set; }
     public virtual ICollection<CompanyLocationService> CompanyLocationServices { get; set; }
     public virtual ICollection<AdvertisementImage>? Advertisements { get; set; }
+    
+    // 1 Company have many Driver
+    public virtual ICollection<int>? DriversId { get; set; }
     public virtual Payment? Payment { get; set; }
 }

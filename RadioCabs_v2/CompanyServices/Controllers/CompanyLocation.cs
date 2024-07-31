@@ -75,8 +75,74 @@ namespace CompanyServices.Controllers
         }
         
         // Add Array Many at 1 times Location ex : "companyId: 1", cityService : ["city1", "city2", "city3"]
-      
+        [HttpPost("company/addMany/location")]
+        public async Task<IActionResult> AddManyLocation(List<LocationServiceDto> locationServiceDtos)
+        {
+            try
+            {
+                if (locationServiceDtos == null || locationServiceDtos.Count == 0)
+                {
+                    return BadRequest(new
+                    {
+                        StatusCode = 400,
+                        Message = "Invalid data format."
+                    });
+                }
 
+                var companyIds = locationServiceDtos.Select(dto => dto.CompanyId).Distinct();
+                var companies = await _dbContext.Companies
+                    .Include(c => c.CompanyLocationServices)
+                    .Where(c => companyIds.Contains(c.Id))
+                    .ToListAsync();
+
+                if (companies.Count != companyIds.Count())
+                {
+                    return NotFound(new
+                    {
+                        StatusCode = 404,
+                        Message = "One or more companies not found."
+                    });
+                }
+
+                var newLocationServices = new List<CompanyLocationService>();
+
+                foreach (var dto in locationServiceDtos)
+                {
+                    var company = companies.First(c => c.Id == dto.CompanyId);
+
+                    if (company.CompanyLocationServices.Any(l => l.CityService == dto.CityService))
+                    {
+                        return BadRequest(new
+                        {
+                            StatusCode = 400,
+                            Message = $"Location {dto.CityService} already exists for company {dto.CompanyId}"
+                        });
+                    }
+
+                    var location = new CompanyLocationService
+                    {
+                        CompanyId = dto.CompanyId,
+                        CityService = dto.CityService
+                    };
+                    newLocationServices.Add(location);
+                }
+
+                await _dbContext.CompanyLocationServices.AddRangeAsync(newLocationServices);
+                await _dbContext.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetLocationById), new { locationId = newLocationServices.First().Id },
+                    newLocationServices);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    StatusCode = 500,
+                    Message = "An error occurred while adding the location",
+                    Error = ex.Message
+                });
+            }
+        }
         
 
         // Get Location by ID

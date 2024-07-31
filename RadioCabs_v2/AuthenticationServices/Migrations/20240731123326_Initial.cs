@@ -17,15 +17,16 @@ namespace AuthenticationServices.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DriverFullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DriverFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DriverCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DriverMobile = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DriverMobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DriverEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: true),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompanyId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

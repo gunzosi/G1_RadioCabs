@@ -9,4 +9,5 @@ public class DriverDto
     public string DriverMobile { get; set; }
     public string Password { get; set; }
     public string? Role { get; set; }
+    public string? CompanyId { get; set; }
 }

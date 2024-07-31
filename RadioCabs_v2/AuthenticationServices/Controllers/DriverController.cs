@@ -47,13 +47,14 @@ namespace AuthenticationServices.Controllers
                     DriverCode = driverCodeRandom,
                     DriverMobile = CheckingPattern.AddPrefixMobile(driverDto.DriverMobile),
                     Password = PasswordHelper.HashPassword(driverDto.Password),
-                    Role = "Driver"
+                    Role = "Driver",
+                    CompanyId = driverDto.CompanyId
                 };
 
                 await _dbContext.Drivers.AddAsync(driver);
                 await _dbContext.SaveChangesAsync();
 
-                var token = JwtHelper.GenerateToken(driver.DriverMobile, _configuration["Jwt:Key"], "Driver");
+                var token = JwtHelper.GenerateToken(driver.DriverMobile, _configuration["Jwt:Key"], driver.Role);
 
                 _redisclient.Publish("driver_register",
                     $"{driver.DriverFullName} | {driver.DriverMobile} | {driver.DriverCode}");

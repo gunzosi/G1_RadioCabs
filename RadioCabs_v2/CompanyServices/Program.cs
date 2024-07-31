@@ -58,6 +58,22 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // 5. Dependency Injection - DONT USE THIS
 // builder.Services.AddScoped<IBlobServices, BlobServices>();
 
+// 6. CORS - Cross Origin Resource Sharing
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        corsPolicyBuilder =>
+        {
+            corsPolicyBuilder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
+// 7. Đăng ký HttpClient
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // CORS - Cross Origin Resource Sharing
@@ -65,6 +81,9 @@ app.UseCors(corsPolicyBuilder => corsPolicyBuilder
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader());
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

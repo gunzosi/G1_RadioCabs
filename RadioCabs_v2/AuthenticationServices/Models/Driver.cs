@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace AuthenticationServices.Models;
 
@@ -18,6 +19,7 @@ public class Driver
     
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
-    
+    public string? CompanyId { get; set; }
+    [JsonIgnore]
     public virtual DriverInfo? DriverInfo { get; set; }
 }

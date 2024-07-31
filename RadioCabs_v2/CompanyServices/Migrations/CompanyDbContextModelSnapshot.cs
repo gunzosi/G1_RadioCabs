@@ -93,6 +93,9 @@ namespace CompanyServices.Migrations
                     b.Property<string>("Designation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DriversId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 

@@ -30,6 +30,9 @@ namespace AuthenticationServices.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DriverCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -37,15 +40,12 @@ namespace AuthenticationServices.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DriverFullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DriverMobile")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RefreshToken")

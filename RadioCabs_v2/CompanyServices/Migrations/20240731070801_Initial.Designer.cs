@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyServices.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    [Migration("20240730114646_Initial")]
+    [Migration("20240731070801_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -94,6 +94,9 @@ namespace CompanyServices.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Designation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DriversId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsActive")

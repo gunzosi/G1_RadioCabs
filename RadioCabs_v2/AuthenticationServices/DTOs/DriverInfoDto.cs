@@ -13,6 +13,7 @@ public class DriverInfoDto
     public string? Ward { get; set; }
     public string? Street { get; set; }
     public string? City { get; set; }
+    public int? CompanyId { get; set; }
     public IFormFile? DriverPersonalImage { get; set; }
     public IFormFile? DriverLicenseImage { get; set; }
 }
