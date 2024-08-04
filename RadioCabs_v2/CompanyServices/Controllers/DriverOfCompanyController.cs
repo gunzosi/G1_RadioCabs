@@ -7,6 +7,7 @@ using RedisClient;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace CompanyServices.Controllers
 {
@@ -71,6 +72,9 @@ namespace CompanyServices.Controllers
                     return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
                 }
                 var drivers = await response.Content.ReadAsStringAsync();
+                
+                // var drivers = DeserializeObject(await response.Content.ReadAsStringAsync());
+
                 return Ok(new
                 {
                     Status = 200,
